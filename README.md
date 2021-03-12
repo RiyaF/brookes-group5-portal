@@ -12,7 +12,7 @@
 * Bootstrap
 
 ### Installation instructions
-1. In *App.js* add your firebase API Keys if you would like to chang ethe Firebase App to your instance.
+1. In app/index.js need to  add new firebase API Keys if you would like to change the Firebase App to a new instance.
 2. Install React.JS - [Link](https://www.codecademy.com/articles/react-setup-v) <br>
 3. Set up Firebase - [Link](https://firebase.google.com/docs/web/setup) <br>
 4. Deploy the Application - [Link](https://firebase.google.com/docs/hosting/) <br>
