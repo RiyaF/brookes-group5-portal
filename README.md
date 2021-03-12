@@ -23,9 +23,8 @@
 
 ### Team
 Riya Fernandes <br>
-Baljit Singh <br>
-Hashmath Ali Mohammed  <br>
 Sonu Saju <br>
+Hashmath Ali <br>
 Rachel Harrison - PO/Module Lead <br>
 
 ### Screenshots
