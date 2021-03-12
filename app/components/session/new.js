@@ -31,7 +31,7 @@ var LogInForm = React.createClass({
 		//if successfully logged in, reroute to home
 		this.unsubscribe = firebase.auth().onAuthStateChanged((user) => {
   			if (user) {
-				hashHistory.push("/");
+				hashHistory.push("/users/" + user.uid);
   			} else {
 		    	hashHistory.push("/login");
   			}

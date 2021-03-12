@@ -202,17 +202,17 @@ var Home = React.createClass({
     return (
       <div>
         <center>
-          <h1>Job Posts</h1>
+          <h1>Jobs</h1>
         </center>
         <br />
         <div className="update-post-container">
-          <input
+          {/* <input
             type="text"
             ref="body"
             placeholder="What are you thinking about?"
             onKeyPress={this.handleKeyPress}
             className="form-control update-post"
-          />
+          /> */}
           <br />
         </div>
         {reversedPost.map((post, index) => (
