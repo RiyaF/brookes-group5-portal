@@ -14,7 +14,7 @@ var DeleteAccount = React.createClass({
 		if(true){
 			var user = firebase.auth().currentUser;
 
-			if(confirm("Are you sure you want to delete your account?")){
+			if(confirm("Are you sure you want to close your account? You’ll lose your connections, messages, endorsements, and recommendations.")){
 
 				//TODO: user gets deleted before we unliked the posts... figure it out!
 				//removes the user-likes from that user
@@ -69,9 +69,9 @@ var DeleteAccount = React.createClass({
 	render: function(){
 		return (
 			<div>
-				<h3 style={{color:'red'}}>Danger Zone</h3>
+				
 						
-				<button onClick={this.handleDestroy} className="btn btn-danger">Delete Account</button><br />
+				<button onClick={this.handleDestroy} className="btn btn-danger">Close Account</button><br />
 			</div>
 		);
 	}
