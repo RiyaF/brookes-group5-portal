@@ -119,9 +119,9 @@ var SignUpForm = React.createClass({
       <div>
         {errorAlert}
 
-        <div className="col-md-4"></div>
+        <div className="col-md-5"></div>
 
-        <div className="col-md-4 margin-top-30">
+        <div className="col-md-5 margin-top-30">
           <center>
             <h1>Sign Up</h1>
             <br />
@@ -143,6 +143,14 @@ var SignUpForm = React.createClass({
                   className="radio-icon"
                 />
                 <span className="radio-icon">Organisation</span>
+                <input
+                  type="radio"
+                  name="recruiter"
+                  value="false"
+                  onChange={this.accountChange}
+                  className="radio-icon"
+                />
+                <span className="radio-icon">Administrator</span>
               </div>
               <input
                 type="text"
@@ -195,7 +203,7 @@ var SignUpForm = React.createClass({
             </div>
           </center>
         </div>
-        <div className="col-md-4"></div>
+        <div className="col-md-5"></div>
       </div>
     );
   },
