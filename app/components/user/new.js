@@ -20,7 +20,68 @@ var SignUpForm = React.createClass({
     var password = this.refs.password.value;
     var password_confirmation = this.refs.password_confirmation.value;
 
-    if (firstName && lastName) {
+    if (recruiter) {
+      console.log("Recruiter signup");
+      if (firstName && lastName) {
+        //creates the user on firebase
+        firebase
+          .auth()
+          .createUserWithEmailAndPassword(
+            email,
+            password == password_confirmation ? password : "nil"
+          )
+          .catch(function (error) {
+            if (error) {
+              that.setState({ hasError: true });
+              that.setState({
+                errorMsg:
+                  "Please enter a valid email address with a password of at least 6 characters.",
+              });
+            }
+          });
+      } else {
+        that.setState({ hasError: true });
+        that.setState({
+          errorMsg: "First or last name field cannot be empty.",
+        });
+      }
+    } else {
+      console.log("Student signup");
+      var isValidEmail = this.validateBrookesID(email);
+      if (isValidEmail) {
+        console.log("Yup Valid student or professor");
+        if (firstName && lastName) {
+          //creates the user on firebase
+          firebase
+            .auth()
+            .createUserWithEmailAndPassword(
+              email,
+              password == password_confirmation ? password : "nil"
+            )
+            .catch(function (error) {
+              if (error) {
+                that.setState({ hasError: true });
+                that.setState({
+                  errorMsg:
+                    "Please enter a valid email address with a password of at least 6 characters.",
+                });
+              }
+            });
+        } else {
+          that.setState({ hasError: true });
+          that.setState({
+            errorMsg: "First or last name field cannot be empty.",
+          });
+        }
+      } else {
+        console.log("Some random email id - don't signup");
+        that.setState({ hasError: true });
+        that.setState({
+          errorMsg: "It is not a valid Brookes University ID",
+        });
+      }
+    }
+    /* if (firstName && lastName) {
       //creates the user on firebase
       firebase
         .auth()
@@ -40,7 +101,7 @@ var SignUpForm = React.createClass({
     } else {
       that.setState({ hasError: true });
       that.setState({ errorMsg: "First or last name field cannot be empty." });
-    }
+    } */
 
     //if successfully logged in, add the user child to the database with the name and email.
     this.unsubscribe = firebase.auth().onAuthStateChanged(function (user) {
@@ -69,6 +130,21 @@ var SignUpForm = React.createClass({
         hashHistory.push("/");
       }
     });
+  },
+
+  validateBrookesID: function (email) {
+    var studentIDRegEx = /^[0-9]+@brookes.ac.uk$/;
+    var profIDRegEx = /^p[0-9]+@brookes.ac.uk$/;
+    if (studentIDRegEx.test(email)) {
+      console.log("Valid student id");
+      return true;
+    } else if (profIDRegEx.test(email)) {
+      console.log("Valid professor id");
+      return true;
+    } else {
+      console.log("Stranger Danger");
+      return false;
+    }
   },
 
   componentWillUnmount: function () {
