@@ -9,7 +9,7 @@ var JobListings = React.createClass({
 	},
 
 	componentWillMount: function(){
-        this.joblistingRef = firebase.database().ref().child('user-joblisting/'+this.props.pageID);
+        this.joblistingRef = firebase.database().ref().child('user-joblisting').orderByChild("user_id").equalTo(this.props.pageID);
         this.joblistingRef.on("child_added", snap => {
         	var joblisting = snap.val();
 			if(joblisting){
@@ -19,7 +19,7 @@ var JobListings = React.createClass({
 			}
         });
 
-        this.joblistingRefChanged = firebase.database().ref().child('user-joblisting/'+this.props.pageID);
+        this.joblistingRefChanged = firebase.database().ref().child('user-joblisting').orderByChild("user_id").equalTo(this.props.pageID);
         this.joblistingRefChanged.on("child_changed", snap => {
         	var joblisting = snap.val();
 			if(joblisting){
@@ -37,7 +37,7 @@ var JobListings = React.createClass({
 			}
         });
 
-        this.joblistingRefRemoved = firebase.database().ref().child('user-joblisting/'+this.props.pageID);
+        this.joblistingRefRemoved = firebase.database().ref().child('user-joblisting').orderByChild("user_id").equalTo(this.props.pageID);
         this.joblistingRefRemoved.on("child_removed", snap => {
         	var joblisting = snap.val();
 			if(joblisting){
@@ -63,7 +63,7 @@ var JobListings = React.createClass({
 			this.joblistingRefRemoved.off();
 			this.setState({joblistings: []});
 
-			this.joblistingRef = firebase.database().ref().child('user-joblisting/'+ nextProps.pageID);
+			this.joblistingRef = firebase.database().ref().child('user-joblisting');
 	        this.joblistingRef.on("child_added", snap => {
 	        	var joblisting = snap.val();
 				if(joblisting){
@@ -130,16 +130,18 @@ var JobListings = React.createClass({
 			location: this.refs.location.value,
 			description: this.refs.description.value,
 			responsibilities: this.refs.responsibilities.value,
-			qualitifications: this.refs.qualitifications.value
+			qualitifications: this.refs.qualitifications.value,
+			user_id:this.props.pageID,
+			status: "approval_pending"
 		}
 
 		if(this.state.editing){
 			var joblistingUpdate = {};
-			joblistingUpdate['/user-joblisting/' + this.props.pageID + '/' + this.state.joblistings[this.state.indexToEdit].key] = joblistingData;
+			joblistingUpdate['/user-joblisting/' + '/' + this.state.joblistings[this.state.indexToEdit].key] = joblistingData;
 			firebase.database().ref().update(joblistingUpdate);
 		}else{
 			var newExperienceKey = firebase.database().ref().child('joblisting').push().key;
-			firebase.database().ref('/user-joblisting/' + this.props.pageID + '/' + newExperienceKey).set(joblistingData);
+			firebase.database().ref('/user-joblisting/' + '/' + newExperienceKey).set(joblistingData);
 		}
 		
 		this.setState({editing: false});

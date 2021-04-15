@@ -13,15 +13,14 @@ var SignUpForm = React.createClass({
     var that = this;
 
     //gets the data from the form fields
-    var recruiter = this.state.recruiter == "true" ? true : false;
+    var type = this.state.type;
     var firstName = this.refs.firstName.value;
     var lastName = this.refs.lastName.value;
     var email = this.refs.email.value;
     var password = this.refs.password.value;
     var password_confirmation = this.refs.password_confirmation.value;
 
-    if (recruiter) {
-      console.log("Recruiter signup");
+    if (type == "organisation") {
       if (firstName && lastName) {
         //creates the user on firebase
         firebase
@@ -106,17 +105,20 @@ var SignUpForm = React.createClass({
     //if successfully logged in, add the user child to the database with the name and email.
     this.unsubscribe = firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
+        console.log("testfgnfj")
         var userData = {
           email: email,
           first: firstName,
           last: lastName,
-          recruiter: recruiter,
+          type: type,
           imageURL:
             "https://icon-library.net/images/default-profile-icon/default-profile-icon-17.jpg",
           interests: "",
           skills: "",
+          creationDate: Date.now()
         };
-
+        console.log(userData)
+        
         firebase
           .database()
           .ref("users/" + firebase.auth().currentUser.uid)
@@ -135,10 +137,11 @@ var SignUpForm = React.createClass({
   validateBrookesID: function (email) {
     var studentIDRegEx = /^[0-9]+@brookes.ac.uk$/;
     var profIDRegEx = /^p[0-9]+@brookes.ac.uk$/;
-    if (studentIDRegEx.test(email)) {
+    console.log(studentIDRegEx.test(email), this.state.type)
+    if (studentIDRegEx.test(email) && this.state.type == "student") {
       console.log("Valid student id");
       return true;
-    } else if (profIDRegEx.test(email)) {
+    } else if (profIDRegEx.test(email) && this.state.type == "admin") {
       console.log("Valid professor id");
       return true;
     } else {
@@ -158,13 +161,15 @@ var SignUpForm = React.createClass({
     if (e.key == "Enter") {
       try {
         this.handleSignUp();
-      } catch (e) {}
+      } catch (e) { }
     }
   },
 
-  //sets the recruiter state true or false depending on the radio button
+  //sets the type state true or false depending on the radio button
   accountChange: function (e) {
-    this.setState({ recruiter: e.target.value });
+    this.setState({ type: e.target.value });
+    console.log(e)
+
   },
 
   //creates a div alert-danger with the error message
@@ -205,24 +210,24 @@ var SignUpForm = React.createClass({
               <div className="sign-up-type">
                 <input
                   type="radio"
-                  name="recruiter"
-                  value="false"
+                  name="type"
+                  value="student"
                   onChange={this.accountChange}
                   className="radio-icon"
                 />
                 <span className="radio-icon">Student</span>
                 <input
                   type="radio"
-                  name="recruiter"
-                  value="true"
+                  name="type"
+                  value="organisation"
                   onChange={this.accountChange}
                   className="radio-icon"
                 />
                 <span className="radio-icon">Organisation</span>
                 <input
                   type="radio"
-                  name="recruiter"
-                  value="false"
+                  name="type"
+                  value="admin"
                   onChange={this.accountChange}
                   className="radio-icon"
                 />

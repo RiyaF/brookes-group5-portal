@@ -15,7 +15,7 @@ var Endorsements = require('./endorsements.js');
 
 var Profile = React.createClass({
 	getInitialState: function(){
-		return {user_name: "", recruiter: false, isCurrentUser: false, pageID: "", currentUserID: ""};
+		return {user_name: "", type: null, isCurrentUser: false, pageID: "", currentUserID: ""};
 	},
 
     componentWillMount: function(){
@@ -30,12 +30,12 @@ var Profile = React.createClass({
             this.setState({currentUserID: user.uid});
         });
 
-		//gets the name of the user and whether or not he/she is a recruiter--not yet used
+		//gets the name of the user and whether or not he/she is a organisation --not yet used
 		this.userRef = firebase.database().ref().child('users/'+this.props.params.id);
 		this.userRef.on("value", snap=>{
 			var user = snap.val();
 			this.setState({user_name: user.first + " " + user.last});
-			this.setState({recruiter: user.recruiter});
+			this.setState({type: user.type});
 		});
 	},
 
@@ -52,7 +52,7 @@ var Profile = React.createClass({
 		this.userRef.on("value", snap=>{
 			var user = snap.val();
 			this.setState({user_name: user.first + " " + user.last});
-			this.setState({recruiter: user.recruiter});
+			this.setState({type: user.type});
 		});
 	},
 
@@ -63,7 +63,7 @@ var Profile = React.createClass({
 
 	render: function(){
 		var show;
-		if(this.state.recruiter){
+		if(this.state.type == 'organisation'){
 			show = 	<div>
 						<Summary pageID={this.state.pageID} isCurrentUser={this.state.isCurrentUser}/>
 						<JobListings pageID={this.state.pageID} isCurrentUser={this.state.isCurrentUser}/>

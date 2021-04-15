@@ -18,16 +18,16 @@ var Search = React.createClass({
   },
 
   componentWillMount: function () {
-    this.setState({ isRecruiter: this.props.isRecruiter });
+    this.setState({ type: this.props.type });
   },
 
   componentWillReceiveProps: function (nextProps) {
-    this.setState({ isRecruiter: nextProps.isRecruiter });
+    this.setState({ type: nextProps.type });
   },
 
   render: function () {
     var advancedSearch;
-    if (this.props.isRecruiter) {
+    if (this.props.type == 'organisation') {
       advancedSearch = (
         <button
           className="btn btn-link"
