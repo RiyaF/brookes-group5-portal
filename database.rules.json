@@ -10,8 +10,12 @@
             ".indexOn": "status"
         }	
     },
+    "user-joblisting":{
+          ".indexOn": ["user_id","status"]
+      }	,
+  
     "users":{
-        ".indexOn": ["last", "recruiter"]
+        ".indexOn": ["last", "type"]
     }
   }
 }

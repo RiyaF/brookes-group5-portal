@@ -202,7 +202,7 @@ var Home = React.createClass({
     return (
       <div>
         <center>
-          <h1>Job Posts</h1>
+          <h1>Feeds</h1>
         </center>
         <br />
         <div className="update-post-container">

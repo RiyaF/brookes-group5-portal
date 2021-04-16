@@ -16,6 +16,8 @@ var Connections = require('../components/connection/index.js');
 var SearchResults = require('../components/page/results.js');
 var AdvancedSearch = require('../components/page/advanced.js');
 var Companies = require('../components/page/companies.js');
+var Jobs = require('../components/page/jobs.js');
+var Applicants = require('../components/page/applicants.js');
 
 var requireAuth = require('./require_auth.js')
 
@@ -33,6 +35,8 @@ var routes = (
 			<Route path="results/:name" component={SearchResults} onEnter={requireAuth}/>
 			<Route path="advanced" component={AdvancedSearch} onEnter={requireAuth}/>
 			<Companies path="companies" component={Companies} onEnter={requireAuth}/>
+			<Jobs path="jobs/:id" component={Jobs} onEnter={requireAuth}/>
+			<Applicants path='applicants/:jobId' component={Applicants} onEnter={requireAuth}/>
 		</Route>
 	</Router>
 );
