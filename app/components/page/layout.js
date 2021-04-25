@@ -34,10 +34,12 @@ var Layout = React.createClass({
                     var user = snapUser.val();
                     this.setState({ imgURL: user.imageURL });
                     this.setState({ type: (user == null || !user.type) ? false : user.type });
-                    if (user.type == "student" && user.creationDate) {
-                        countDownDate = new Date(user.creationDate);
-                        countDownDate.setFullYear(countDownDate.getFullYear() + 1);
-                        this.countDown();
+                    if (user.type == "student" && user.graduationDate) {
+                        countDownDate = new Date(user.graduationDate);
+                        if (new Date() > new Date(countDownDate)) {
+                            countDownDate.setFullYear(countDownDate.getFullYear() + 1);
+                            this.countDown();
+                        }
                     }
                 });
 
@@ -80,10 +82,12 @@ var Layout = React.createClass({
                 this.userRef = firebase.database().ref().child('users/' + firebase.auth().currentUser.uid);
                 this.userRef.on("value", snapUser => {
 
-                    if (snapUser.val().type == "student" && snapUser.val().creationDate) {
-                        countDownDate = new Date(snapUser.val().creationDate);
-                        countDownDate.setFullYear(countDownDate.getFullYear() + 1);
-                        this.countDown();
+                    if (snapUser.val().type == "student" && snapUser.val().graduationDate) {
+                        countDownDate = new Date(snapUser.val().graduationDate);
+                        if (new Date() > new Date(countDownDate)) {
+                            countDownDate.setFullYear(countDownDate.getFullYear() + 1);
+                            this.countDown();
+                        }
                     }
                     if (user.type == "student" && countDownDate < Date.now()) {
                         firebase.auth().signOut();
@@ -154,10 +158,12 @@ var Layout = React.createClass({
                 this.userRef.on("value", snap => {
                     clearInterval(x);
                     var user = snap.val();
-                    if (user.type == "student" && user.creationDate) {
-                        countDownDate = new Date(user.creationDate);
-                        countDownDate.setFullYear(countDownDate.getFullYear() + 1);
-                        this.countDown();
+                    if (user.type == "student" && user.graduationDate) {
+                        countDownDate = new Date(user.graduationDate);
+                        if (new Date() > new Date(countDownDate)) {
+                            countDownDate.setFullYear(countDownDate.getFullYear() + 1);
+                            this.countDown();
+                        }
                     }
                     if (user.type == "student" && countDownDate < Date.now()) {
                         firebase.auth().signOut();
