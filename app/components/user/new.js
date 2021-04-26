@@ -19,7 +19,8 @@ var SignUpForm = React.createClass({
     var email = this.refs.email.value;
     var password = this.refs.password.value;
     var password_confirmation = this.refs.password_confirmation.value;
-
+    var graduationDate = this.refs.graduationDate?this.refs.graduationDate.value:null;
+    console.log(graduationDate)
     if (type == "organisation") {
       if (firstName && lastName) {
         //creates the user on firebase
@@ -49,7 +50,9 @@ var SignUpForm = React.createClass({
       var isValidEmail = this.validateBrookesID(email);
       if (isValidEmail) {
         console.log("Yup Valid student or professor");
-        if (firstName && lastName) {
+        let login = (type == "student")?graduationDate?true:false:true
+        console.log("login",login)
+        if (firstName && lastName && login) {
           //creates the user on firebase
           firebase
             .auth()
@@ -69,7 +72,7 @@ var SignUpForm = React.createClass({
         } else {
           that.setState({ hasError: true });
           that.setState({
-            errorMsg: "First or last name field cannot be empty.",
+            errorMsg: "First name, last name, graduation date fields cannot be empty.",
           });
         }
       } else {
@@ -115,10 +118,12 @@ var SignUpForm = React.createClass({
             "https://icon-library.net/images/default-profile-icon/default-profile-icon-17.jpg",
           interests: "",
           skills: "",
-          creationDate: Date.now()
+          creationDate: Date.now(),
         };
+        if(type == 'student') {
+          userData.graduationDate=new Date(graduationDate).getTime()
+        }
         console.log(userData)
-        
         firebase
           .database()
           .ref("users/" + firebase.auth().currentUser.uid)
@@ -195,7 +200,12 @@ var SignUpForm = React.createClass({
     } else {
       errorAlert = this.noErrorMessage();
     }
-
+    var alumini = null
+    if (this.state.type == 'student') {
+      alumini = 
+        <input type="date"  ref="graduationDate" placeholder="Graduation Date"
+        className="form-control"/>
+    }
     return (
       <div>
         {errorAlert}
@@ -272,6 +282,8 @@ var SignUpForm = React.createClass({
                 className="form-control"
                 onKeyPress={this.handleKeyPress}
               />
+              <br />
+              {alumini}
               <br />
               <button
                 onClick={this.handleSignUp}

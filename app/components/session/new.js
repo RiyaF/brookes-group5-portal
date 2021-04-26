@@ -33,8 +33,8 @@ var LogInForm = React.createClass({
 		this.unsubscribe = firebase.auth().onAuthStateChanged((user) => {
 			this.userRef = firebase.database().ref().child('users/' + user.uid);
 			this.userRef.on("value", snap => {
-				if (snap.val().type == "student" && snap.val().creationDate) {
-					var countDownDate = new Date(snap.val().creationDate);
+				if (snap.val().type == "student" && snap.val().graduationDate) {
+					var countDownDate = new Date(snap.val().graduationDate);
 					countDownDate.setFullYear(countDownDate.getFullYear() + 1);
 				}
 				if (snap.val().type == "student" && countDownDate < Date.now()) {
