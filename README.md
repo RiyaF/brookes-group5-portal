@@ -50,4 +50,5 @@ Hashmath Ali <br>
 Rachel Harrison - PO/Module Lead <br>
 
 ### Screenshots
-...
+![image](https://user-images.githubusercontent.com/36423900/116618334-d4e46c80-a936-11eb-8069-f99e639f67d5.png)
+
