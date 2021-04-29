@@ -18,8 +18,30 @@
 4. Deploy the Application - [Link](https://firebase.google.com/docs/hosting/) <br>
 	* Change firebase.json's public node to point to <i>build</i> <br>
 
+### Build instructions for development and Testing
 
-### Build instructions
+1. Run the command below to create a build directory with a production build of the app. Inside the build directory will be the webpack created JavaScript file.
+```
+npm install
+``` 
+```
+npm start
+``` 
+2. A valid install should allow you to access the local web interface on: http://localhost:8080/webpack-dev-server/
+
+
+### Build instructions for Production and Deployment
+
+1. Run the command below to create a build directory with a production build of the app. Inside the build directory will be the webpack created JavaScript file.
+```
+npm run build
+``` 
+2. Copy the Style.CSS and Image Assets into the build folder.
+3. Run the following command to deploy to Firebase hosting. Do make sure you have logged into to your project on the commandline.
+```
+firebase deploy
+``` 
+
 
 ### Team
 Riya Fernandes <br>
